@@ -1,3 +1,8 @@
+if exists('g:loaded_projplugin')
+	finish
+endif
+let g:loaded_projplugin = 1
+
 augroup projplugin_augroup
 	au!
 	autocmd BufReadPost,BufNewFile * call timer_start(0, {-> s:projplugin() })
