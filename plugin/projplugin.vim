@@ -9,8 +9,17 @@ function! s:projplugin() abort
 	if exists('b:projplugin_name') && b:projplugin_name ==# projplugin
 		return
 	endif
-	echom 'projplug ' . projplugin
-	let b:projplugin_name = projplugin
+	if s:sourced(projplugin)
+		echom 'Sourced ' . projplugin
+		let b:projplugin_name = projplugin
+	endif
+endfunction
+
+function! s:sourced(name) abort
+	redir => ret
+	silent! execute 'verbose runtime projplugin/'.a:name.'.vim'
+	redir END
+	return exists('ret') && ret !=? ''
 endfunction
 
 function! s:getProject() abort
