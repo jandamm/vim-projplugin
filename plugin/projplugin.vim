@@ -24,7 +24,7 @@ function! s:sourced(name) abort
 	redir => ret
 	silent! execute 'verbose runtime projplugin/'.a:name.'.vim'
 	redir END
-	return exists('ret') && ret !=? ''
+	return !(exists('ret') && ret !=? '')
 endfunction
 
 function! s:getProject() abort
