@@ -1,4 +1,7 @@
-autocmd BufReadPost,BufNewFile * call timer_start(0, {-> s:projplugin() })
+augroup projplugin_augroup
+	au!
+	autocmd BufReadPost,BufNewFile * call timer_start(0, {-> s:projplugin() })
+augroup END
 
 function! s:projplugin() abort
 	let projplugin = s:getProject()
