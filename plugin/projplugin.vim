@@ -1,7 +1,12 @@
 autocmd BufReadPost,BufNewFile * call timer_start(0, {-> s:projplugin() })
 
 function! s:projplugin() abort
-	echo 'projplug ' . s:getProject()
+	let projplugin = s:getProject()
+	if exists('b:projplugin_name') && b:projplugin_name ==# projplugin
+		return
+	endif
+	echom 'projplug ' . projplugin
+	let b:projplugin_name = projplugin
 endfunction
 
 function! s:getProject() abort
