@@ -5,6 +5,7 @@ augroup END
 
 function! s:projplugin() abort
 	let projplugin = s:getProject()
+	if projplugin ==? '' | return | endif
 	if exists('b:projplugin_name') && b:projplugin_name ==# projplugin
 		return
 	endif
