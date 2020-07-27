@@ -9,14 +9,14 @@ augroup projplugin_augroup
 augroup END
 
 function! s:projplugin() abort
-	let projplugin = s:getProject()
-	if projplugin ==? '' | return | endif
-	if exists('b:projplugin_name') && b:projplugin_name ==# projplugin
+	let name = projplugin#name()
+	if name ==? '' | return | endif
+	if exists('b:projplugin_name') && b:projplugin_name ==# name
 		return
 	endif
-	if s:sourced(projplugin)
-		echom 'Sourced ' . projplugin
-		let b:projplugin_name = projplugin
+	if s:sourced(name)
+		echom 'Sourced ' . name
+		let b:projplugin_name = name
 	endif
 endfunction
 
@@ -25,20 +25,4 @@ function! s:sourced(name) abort
 	silent! execute 'verbose runtime projplugin/'.a:name.'.vim'
 	redir END
 	return !(exists('ret') && ret !=? '')
-endfunction
-
-function! s:getProject() abort
-	return fnamemodify(s:getDir(), ':t')
-endfunction
-
-function! s:getDir() abort
-	" Use vim-rooter if possible
-	if exists('*FindRootDirectory')
-		return FindRootDirectory()
-	else
-		redir => ret
-		silent! pwd
-		redir END
-		return substitute(ret, '^\n', '', '')
-	endif
 endfunction
