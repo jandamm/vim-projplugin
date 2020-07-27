@@ -3,6 +3,10 @@ if exists('g:loaded_projplugin')
 endif
 let g:loaded_projplugin = 1
 
+if !exists('g:projplugin_silent')
+	let g:projplugin_silent = 1
+endif
+
 augroup projplugin_augroup
 	au!
 	autocmd BufReadPost,BufNewFile * call timer_start(0, {-> s:projplugin() })
@@ -15,7 +19,9 @@ function! s:projplugin() abort
 		return
 	endif
 	if s:sourced(name)
-		echom 'Sourced ' . name
+		if !g:projplugin_silent
+			echom 'Sourced ' . name
+		endif
 		let b:projplugin_name = name
 	endif
 endfunction
