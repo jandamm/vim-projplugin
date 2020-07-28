@@ -13,7 +13,7 @@ endfunction
 
 function! s:getName() abort
 	if exists('*ProjpluginName')
-		return ProjpluginName()
+		return ProjpluginName(projplugin#path())
 	endif
 endfunction
 
