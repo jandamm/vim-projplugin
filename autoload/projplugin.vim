@@ -3,28 +3,52 @@ if exists('g:autoloaded_projplugin')
 endif
 let g:autoloaded_projplugin = 1
 
-function! projplugin#name() abort
-	let ret = s:getName()
-	if type(ret) != type('') || ret ==? ''
-		let ret = fnamemodify(projplugin#path(), ':t')
+function! projplugin#load() abort
+	let name = s:getName()
+	if name ==? '' | return | endif
+	if exists('b:projplugin_name') && b:projplugin_name ==# name
+		return
 	endif
-	return ret
+	call s:source(name)
+	let b:projplugin_name = name
+endfunction
+
+function! s:source(name) abort
+	let path = 'projplugin/'.a:name.'.vim'
+	let exe = 'runtime '.path
+	if g:projplugin_silence <= 0
+		let ret = ''
+		redir => ret
+		silent! execute 'verbose '.exe
+		redir END
+		if ret !=? "\nnot found in \'runtimepath\': \"".path."\""
+			echom ret
+			echom 'Sourced '.path
+		endif
+	elseif g:projplugin_silence > 1
+		silent! execute exe
+	else
+		execute exe
+	endif
 endfunction
 
 function! s:getName() abort
+	let path = s:getPath()
+	let name = ''
 	if exists('*ProjpluginName')
-		return ProjpluginName(projplugin#path())
+		let name = ProjpluginName(path)
 	endif
+	if type(name) == type('') && name !=? ''
+		return name
+	endif
+	return fnamemodify(path, ':t')
 endfunction
 
-function! projplugin#path() abort
+function! s:getPath() abort
 	" Use vim-rooter if possible
 	if exists('*FindRootDirectory')
 		return FindRootDirectory()
 	else
-		redir => ret
-		silent! pwd
-		redir END
-		return substitute(ret, '^\n', '', '')
+		return getcwd()
 	endif
 endfunction
