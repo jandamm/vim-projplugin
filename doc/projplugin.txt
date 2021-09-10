@@ -1,0 +1,32 @@
+*projplugin.txt*  ftplugin for projects
+
+Author:  Jan Dammshaeuser <https://jandamm.de/>
+
+INTRODUCTION                                    *projplugin*
+
+Lets say your project is `~/projects/github/vim-projplugin`. Then you can add
+`$VIMRUNTIME/projplugin/vim-projplugin.vim` (or `.lua`) and configure it like you
+would configure a |ftplugin|.
+
+Then you open Vim from the root of the project and your config is loaded for
+every buffer. When you want to open `plugin/projplugin.vim` you should do so by
+executing `vim plugin/projplugin.vim` instead of `cd plugin && vim projplugin.vim`
+
+CONFIGURATION                                   *projplugin-configuration*
+
+                                                *ProjpluginName*
+                                                *projplugin-ProjpluginName*
+You can customize the resolved name which |projplugin| is using by defining
+|ProjpluginName|. Use this to differentiate between multiple folders with the
+same name. Return nothing or '' to use the default (folder name).
+>
+    function! ProjpluginName(path, ...) abort
+       if a:path =~? 'project\/subproject'
+           return 'projectsub'
+       endif
+    endfunction
+<
+This will resolve every path matching `project\/subprolject` to `projectsub`.
+Everything else will use the default.
+
+ vim:tw=78:et:ft=help:norl:
