@@ -13,5 +13,5 @@ endif
 
 augroup projplugin_augroup
 	autocmd!
-	autocmd BufReadPost,BufNewFile * call timer_start(0, {-> projplugin#load() })
+	autocmd WinEnter,BufReadPost,BufNewFile * call timer_start(0, {-> projplugin#load() })
 augroup END
