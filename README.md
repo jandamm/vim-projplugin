@@ -26,8 +26,8 @@ of my editor configuration.
 ## How To
 
 Lets say your project is `~/projects/github/vim-projplugin`.
-Then you can add `$VIMRUNTIME/projplugin/vim-projplugin.vim` and configure it like
-you would with a [ftplugin][3].
+Then you can add `$VIMRUNTIME/projplugin/vim-projplugin.vim` (or `.lua`) and
+configure it like you would configure a [ftplugin][3].
 
 Then you open Vim from the root of the project and your config is loaded for
 every buffer. When you want to open `plugin/projplugin.vim` you should do so by

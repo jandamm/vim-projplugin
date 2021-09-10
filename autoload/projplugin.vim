@@ -10,6 +10,9 @@ function! projplugin#load() abort
 		return
 	endif
 	execute 'runtime projplugin/'.name.'.vim'
+	if has('nvim-0.5')
+		execute 'runtime projplugin/'.name.'.lua'
+	endif
 	let b:projplugin_name = name
 endfunction
 
