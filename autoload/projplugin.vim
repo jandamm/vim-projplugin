@@ -9,27 +9,8 @@ function! projplugin#load() abort
 	if exists('b:projplugin_name') && b:projplugin_name ==# name
 		return
 	endif
-	call s:source(name)
+	execute 'runtime projplugin/'.name.'.vim'
 	let b:projplugin_name = name
-endfunction
-
-function! s:source(name) abort
-	let path = 'projplugin/'.a:name.'.vim'
-	let exe = 'runtime '.path
-	if g:projplugin_silence <= 0
-		let ret = ''
-		redir => ret
-		silent! execute 'verbose '.exe
-		redir END
-		if ret !=? "\nnot found in \'runtimepath\': \"".path."\""
-			echom ret
-			echom 'Sourced '.path
-		endif
-	elseif g:projplugin_silence > 1
-		silent! execute exe
-	else
-		execute exe
-	endif
 endfunction
 
 function! s:getName() abort
