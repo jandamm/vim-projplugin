@@ -38,9 +38,9 @@ is always the root of your project.
 
 ## State of this plugin
 
-Right now this plugin is considered fully working but rather a proof of concept.
-I test it in my dotfiles. Feel free to test it as well and create issues.
-I have more ideas for this plugin but I'm not yet sure what makes sense.
+I'm using this plugin for over a year now and haven't had any issues yet. Since
+I consider it mostly feature complete there probably won't be many changes.
+Feel free to create an issue if you have an idea or spot an error.
 
 [1]: https://github.com/LucHermitte/local_vimrc
 [2]: https://github.com/embear/vim-localvimrc
